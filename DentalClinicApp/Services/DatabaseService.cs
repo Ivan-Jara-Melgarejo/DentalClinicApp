@@ -1,26 +1,22 @@
-﻿using DentalClinicApp.Models;
-using Npgsql;
-using System;
+﻿using Npgsql;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DentalClinicApp.Models;
 
 namespace DentalClinicApp.Services
 {
-    internal class DatabaseService
-    
+    public class DatabaseService
     {
-        private readonly string _connectionString = "Host=localhost;Port=5432;Database=DentalClinicDB;Username=postgres;Password=1234";
+        private readonly string _connectionString = "Host=dentalclinicdb.c5ogic2eeexi.us-east-2.rds.amazonaws.com;Port=5432;Database=DentalClinicDB;Username=admin_clinic;Password=SecurePass123";
+        //USA LOCALHOST si tengo apagado el servidor son 780 hrs gratis pendejo...
+        //private readonly string _connectionString = "Host=localhost;Port=5432;Database=DentalClinicDB;Username=admin_clinic;Password=SecurePass123";
 
         public List<Doctor> GetDoctors()
         {
             var doctors = new List<Doctor>();
-
             using (var conn = new NpgsqlConnection(_connectionString))
             {
                 conn.Open();
-                using (var cmd = new NpgsqlCommand("SELECT * FROM Doctors", conn))
+                using (var cmd = new NpgsqlCommand("SELECT * FROM doctors", conn))
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -34,10 +30,7 @@ namespace DentalClinicApp.Services
                     }
                 }
             }
-
             return doctors;
         }
-
-        
     }
 }
